@@ -22,11 +22,17 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :users, [Types::UserType], null: false, description: "Returns a list of users"
-    
+    field :user, Types::UserType, null: true, description: "Returns a user by id" do
+      argument :id, ID, required: true, description: "ID of the user"
+    end
+      
     def users
       User.all
     end
-
+      
+    def user(id:)
+      User.find(id)
+    end
     # TODO: remove me
     # field :test_field, String, null: false,
     #   description: "An example field added by the generator"
