@@ -5,7 +5,7 @@ module Mutations
         field :user, Types::UserType, null: true
 
         def resolve(id:)
-            user = User.find(id)
+            user = User.find_by(id: id)
             raise GraphQL::ExecutionError, "User not found with id: #{id}" unless user
 
             if user.destroy
