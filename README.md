@@ -174,10 +174,12 @@ rspec spec/grahpql/mutations/delete_user_spec.rb    # deleteUser mutation
 
 ### Coverage
 
-| File | Cases |
+17 examples, 0 failures — line coverage: **97.19%**
+
+| Suite | Examples |
 |---|---|
 | `queries/users_spec.rb` | empty list, returns all users, correct fields |
-| `queries/user_spec.rb` | returns user, not found error |
+| `queries/user_spec.rb` | returns user, not found error, nil data |
 | `mutations/create_user_spec.rb` | creates user, returns user, missing field error, duplicate email error |
 | `mutations/update_user_spec.rb` | updates user, no attributes error, duplicate email error, not found error |
 | `mutations/delete_user_spec.rb` | deletes user, returns deleted user, not found error |
