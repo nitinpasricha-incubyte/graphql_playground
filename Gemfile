@@ -54,3 +54,7 @@ group :development, :test do
 end
 
 gem "graphql", "~> 2.6"
+
+group :test do
+  gem "simplecov", require: false
+end
