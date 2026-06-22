@@ -31,7 +31,7 @@ module Types
     end
 
     def user(id:)
-      User.find(id)
+      User.find_by(id: id) || raise(GraphQL::ExecutionError, "User not found with id: #{id}")
     end
     # TODO: remove me
     # field :test_field, String, null: false,
