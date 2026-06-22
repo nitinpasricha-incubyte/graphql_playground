@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "User Query" do
-
   let(:query) do
     ->(id) {
       <<~GQL

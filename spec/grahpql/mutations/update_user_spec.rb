@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "UpdateUser Mutation" do
-
   let(:mutation) do
     ->(id:, first_name: nil, last_name: nil, email: nil) {
       attrs = { firstName: first_name, lastName: last_name, email: email }
@@ -74,5 +73,4 @@ RSpec.describe "UpdateUser Mutation" do
       expect(result["errors"][0]["message"]).to eq("User not found with id: 0")
     end
   end
-
 end

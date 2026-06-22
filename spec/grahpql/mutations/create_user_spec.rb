@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "CreateUser mutation" do
-
   let(:mutation) do
     ->(first_name:, last_name:, email:) {
       <<~GQL
@@ -60,5 +59,4 @@ RSpec.describe "CreateUser mutation" do
       expect(result["errors"][0]["message"]).to eq("Email has already been taken")
     end
   end
-
 end

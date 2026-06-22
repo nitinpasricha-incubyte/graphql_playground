@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "DeleteUser Mutation" do
-
   let(:mutation) do
     ->(id:) {
       <<~GQL
@@ -50,5 +49,4 @@ RSpec.describe "DeleteUser Mutation" do
       expect(result["errors"][0]["message"]).to eq("User not found with id: 0")
     end
   end
-
 end
