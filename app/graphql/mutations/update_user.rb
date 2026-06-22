@@ -8,8 +8,8 @@ module Mutations
         field :user, Types::UserType, null: true
 
         def resolve(id:, first_name: nil, last_name: nil, email: nil)
-            user = User.find(id)
-            raise GraphQL::ExecutionError, "User not found" unless user
+            user = User.find_by(id: id)
+            raise GraphQL::ExecutionError, "User not found with id: #{id}" unless user
 
             attrs = { first_name: first_name, last_name: last_name, email: email }.compact
             if attrs.empty?
