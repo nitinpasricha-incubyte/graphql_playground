@@ -49,6 +49,8 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 
   gem "graphiql-rails"
+
+  gem "rspec-rails"
 end
 
 gem "graphql", "~> 2.6"
