@@ -164,5 +164,20 @@ All mutations return a `GraphQL::ExecutionError` in the `errors` key on failure.
 ## Testing
 
 ```bash
-rspec
+rspec                                               # run all tests
+rspec spec/grahpql/queries/users_spec.rb            # users query
+rspec spec/grahpql/queries/user_spec.rb             # user query
+rspec spec/grahpql/mutations/create_user_spec.rb    # createUser mutation
+rspec spec/grahpql/mutations/update_user_spec.rb    # updateUser mutation
+rspec spec/grahpql/mutations/delete_user_spec.rb    # deleteUser mutation
 ```
+
+### Coverage
+
+| File | Cases |
+|---|---|
+| `queries/users_spec.rb` | empty list, returns all users, correct fields |
+| `queries/user_spec.rb` | returns user, not found error |
+| `mutations/create_user_spec.rb` | creates user, returns user, missing field error, duplicate email error |
+| `mutations/update_user_spec.rb` | updates user, no attributes error, duplicate email error, not found error |
+| `mutations/delete_user_spec.rb` | deletes user, returns deleted user, not found error |
