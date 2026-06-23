@@ -4,9 +4,9 @@ RSpec.describe GithubUserService do
   describe '#call' do
     context 'when the user exists on GitHub' do
       it 'returns user data', vcr: { cassette_name: 'github/user_found' } do
-        result = GithubUserService.new('Nitin-Pasricha').call
+        result = GithubUserService.new('octocat').call
 
-        expect(result[:login]).to eq('Nitin-Pasricha')
+        expect(result[:login]).to eq('octocat')
         expect(result[:name]).to be_present
         expect(result[:avatar_url]).to be_present
         expect(result[:public_repos]).to be_a(Integer)
