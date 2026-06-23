@@ -10,7 +10,7 @@ VCR.configure do |config|
     record: :new_episodes                           # record mode(here set as new_epsiodes)
   }
 
-  config.filter_sensitive_data('<API_KEY>') {ENV['MY_API_KEY']}
+  config.filter_sensitive_data('<API_KEY>') { ENV['MY_API_KEY'] }
 end
 
 

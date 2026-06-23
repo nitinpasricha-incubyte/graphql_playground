@@ -1,10 +1,10 @@
-require 'net/http'
-require 'json'
+require "net/http"
+require "json"
 
 class GithubUserService
   UserNotFoundError = Class.new(StandardError)
 
-  GITHUB_API_URL = 'https://api.github.com/users'
+  GITHUB_API_URL = "https://api.github.com/users"
 
   def initialize(username)
     @username = username
@@ -14,7 +14,7 @@ class GithubUserService
     uri = URI("#{GITHUB_API_URL}/#{@username}")
     response = Net::HTTP.get_response(uri)
 
-    raise UserNotFoundError, "GitHub user '#{@username}' not found" if response.code == '404'
+    raise UserNotFoundError, "GitHub user '#{@username}' not found" if response.code == "404"
 
     data = JSON.parse(response.body, symbolize_names: true)
 
