@@ -161,6 +161,25 @@ All mutations return a `GraphQL::ExecutionError` in the `errors` key on failure.
 
 ---
 
+## External API Integration
+
+### GitHub User Service
+
+`app/services/github_user_service.rb` fetches a GitHub user's public profile via the GitHub REST API.
+
+```ruby
+result = GithubUserService.new('octocat').call
+# => { login: "octocat", name: "The Octocat", avatar_url: "...", public_repos: 8 }
+```
+
+**Errors:**
+
+| Error | When |
+|---|---|
+| `GithubUserService::UserNotFoundError` | GitHub returns 404 (username doesn't exist) |
+
+---
+
 ## Testing
 
 ```bash
@@ -170,11 +189,51 @@ rspec spec/grahpql/queries/user_spec.rb             # user query
 rspec spec/grahpql/mutations/create_user_spec.rb    # createUser mutation
 rspec spec/grahpql/mutations/update_user_spec.rb    # updateUser mutation
 rspec spec/grahpql/mutations/delete_user_spec.rb    # deleteUser mutation
+rspec spec/services/github_user_service_spec.rb     # GitHub user service
 ```
+
+### VCR
+
+HTTP interactions in the test suite are recorded and replayed using [VCR](https://github.com/vcr/vcr) + WebMock. No real network calls are made after the cassette is recorded.
+
+**Setup** (`spec/support/vcr.rb`):
+
+```ruby
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/cassettes'
+  config.hook_into :webmock
+  config.configure_rspec_metadata!         # enables :vcr tag in RSpec
+  config.ignore_localhost = true
+  config.default_cassette_options = { record: :new_episodes }
+  config.filter_sensitive_data('<API_KEY>') { ENV['MY_API_KEY'] }
+end
+```
+
+**Record modes:**
+
+| Mode | Behaviour |
+|---|---|
+| `:once` | Records once, always replays. Errors if cassette missing. |
+| `:new_episodes` | Replays existing, records new requests *(default)* |
+| `:none` | Never records — fails if no cassette match |
+| `:all` | Always re-records, ignores existing cassette |
+
+**Using VCR in a spec:**
+
+```ruby
+it 'returns user data', vcr: { cassette_name: 'github/user_found' } do
+  result = GithubUserService.new('octocat').call
+  expect(result[:login]).to eq('octocat')
+end
+```
+
+Cassettes are stored under `spec/cassettes/` and committed to the repository so CI runs without hitting real APIs.
+
+---
 
 ### Coverage
 
-17 examples, 0 failures — line coverage: **97.19%**
+19 examples, 0 failures — line coverage: **98.88%**
 
 | Suite | Examples |
 |---|---|
@@ -183,3 +242,4 @@ rspec spec/grahpql/mutations/delete_user_spec.rb    # deleteUser mutation
 | `mutations/create_user_spec.rb` | creates user, returns user, missing field error, duplicate email error |
 | `mutations/update_user_spec.rb` | updates user, no attributes error, duplicate email error, not found error |
 | `mutations/delete_user_spec.rb` | deletes user, returns deleted user, not found error |
+| `services/github_user_service_spec.rb` | returns user data, raises UserNotFoundError |
