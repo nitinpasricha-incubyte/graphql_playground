@@ -227,7 +227,7 @@ it 'returns user data', vcr: { cassette_name: 'github/user_found' } do
 end
 ```
 
-Cassettes are stored under `spec/cassettes/` and committed to the repository so CI runs without hitting real APIs.
+Cassettes are stored under `spec/cassettes/` and committed to the repository.
 
 ---
 
